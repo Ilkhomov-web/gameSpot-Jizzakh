@@ -4,6 +4,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
 import { useThemeContext } from '@/context/ThemeContext';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar = () => {
   const { mode, toggleTheme } = useThemeContext();
@@ -49,6 +50,10 @@ const Navbar = () => {
                 ) : (
                   <DarkModeIcon sx={{ color: mode === 'dark' ? 'white' : '#3B0270' }} />
                 )}
+              </Button>
+              <Button sx={{ color: mode === 'dark' ? 'white' : '#3B0270' }}>
+                {' '}
+                <LogoutIcon /> Login
               </Button>
             </Box>
           </Grid>

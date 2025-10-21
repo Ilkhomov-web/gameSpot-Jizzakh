@@ -1,5 +1,6 @@
 "use client";
 import Navbar from "@/components/Navbar";
+import { MapOrListProvider } from "@/context/MapOrListContext";
 import { ThemeProvider, useThemeContext } from "@/context/ThemeContext";
 
 export default function RootLayout({ children }) {
@@ -8,8 +9,10 @@ export default function RootLayout({ children }) {
       <body>
         <ThemeProvider>
           <ThemedBackground>
-            <Navbar />
-            {children}
+           <MapOrListProvider>
+           <Navbar />
+           {children}
+           </MapOrListProvider>
           </ThemedBackground>
         </ThemeProvider>
       </body>
