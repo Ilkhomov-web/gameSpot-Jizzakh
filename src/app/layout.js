@@ -1,19 +1,28 @@
 "use client";
 import Navbar from "@/components/Navbar";
-import { MapOrListProvider } from "@/context/MapOrListContext";
 import { ThemeProvider, useThemeContext } from "@/context/ThemeContext";
+import { AuthProvider } from "@/context/AuthContext";
+import { MapOrListProvider } from "@/context/MapOrListContext";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+
+  const hideNavbar =
+    pathname === "/login" || pathname === "/signup"; // login yoki signupda yashiramiz
+
   return (
     <html lang="en">
       <body>
         <ThemeProvider>
-          <ThemedBackground>
-           <MapOrListProvider>
-           <Navbar />
-           {children}
-           </MapOrListProvider>
-          </ThemedBackground>
+          <AuthProvider>
+            <ThemedBackground>
+              <MapOrListProvider>
+                {!hideNavbar && <Navbar />}
+                {children}
+              </MapOrListProvider>
+            </ThemedBackground>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
@@ -35,6 +44,7 @@ const ThemedBackground = ({ children }) => {
               #080421
             `
             : "#ffffff",
+        transition: "background 0.3s ease",
       }}
     >
       {children}
