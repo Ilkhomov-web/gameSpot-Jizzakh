@@ -65,5 +65,16 @@ export const data = [
       location: { lat: 40.1160, lng: 67.8415 },
       address: "Jizzax markazi, Do‘stlik ko'chasi"
     },
+    {
+      id: 7,
+      name: "PlayArena East",
+      type: "ps",
+      price: "15 000 so'm/soat",
+      rating: 4.3,
+      premium: false,
+      image: "/logo.png",
+      location: { lat: 40.1160, lng: 67.8415 },
+      address: "Jizzax markazi, Do‘stlik ko'chasi"
+    },
   ];
   

@@ -31,7 +31,7 @@ const LeafLetMap = () => {
       center={jizzax}
       zoom={13}
       style={{
-        height: '500px',
+        height: '550px',
         width: '100%',
         borderRadius: '12px',
         marginBottom: '50px',

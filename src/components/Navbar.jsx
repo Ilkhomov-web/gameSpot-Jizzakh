@@ -16,7 +16,6 @@ const Navbar = () => {
       <Container maxWidth="lg">
         <Grid container>
           <Grid
-            item
             size={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}
             sx={{ display: 'flex', alignItems: 'center', gap: '10px' }}
           >
@@ -31,7 +30,6 @@ const Navbar = () => {
             </Typography>
           </Grid>
           <Grid
-            item
             size={{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }}
             sx={{ display: 'flex', alignItems: 'center', gap: '10px', justifyContent: 'flex-end' }}
           >

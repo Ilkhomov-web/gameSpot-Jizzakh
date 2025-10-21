@@ -12,12 +12,31 @@ const CardClub = (prop) => {
   const { club } = prop;
   return (
     <Box
+      // sx={{
+      //   background: '#3B0270',
+      //   borderRadius: '12px',
+      //   width: '270px',
+      //   position: 'relative',
+      //   boxShadow: '5px 10px 10px rgba(59, 2, 111, 0.5)',
+      // }}
       sx={{
-        background: '#3B0270',
-        borderRadius: '12px',
         width: '270px',
+        background: '#3B0270',
+        justifyContent: 'space-between',
+        borderRadius: '12px',
         position: 'relative',
-        boxShadow: '5px 10px 10px rgba(59, 2, 111, 0.5)',
+        transition: 'all 0.5s ease',
+        // border: '1px solid rgba(74,144,255,0.4)',/
+        cursor: 'pointer',
+        backdropFilter: 'blur(8px)',
+        '&:hover': {
+          background:
+            'linear-gradient(91deg,rgba(99, 34, 161, 1) 0%, rgba(59, 2, 112, 1) 50%, rgba(114, 64, 161, 1) 100%)',
+          boxShadow: '0 0 20px rgba(74,144,255,0.2), 0 0 40px rgba(111,66,193,0.2)',
+          // border: '1px solid rgba(74,144,255,0.4)',/
+          transform: 'translateY(-10px) scale(1.01)',
+          transition: 'all 0.5s ease',
+        },
       }}
     >
       <Box component={'img'} width={'100%'} height={'250px'} src={'/logo.png'}></Box>
@@ -28,7 +47,7 @@ const CardClub = (prop) => {
             top: '0px',
             right: '0px',
             background: 'red',
-            borderTopRightRadius: '12px',
+            borderTopRightRadius: '10px',
             padding: '5px 20px',
             color: 'white',
           }}
