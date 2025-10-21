@@ -2,7 +2,7 @@ export const data = [
     {
         id: 1,
         name: "CyberZone",
-        type: "Kompyuter xona",
+        type: "pc",
         price: "10 000 so'm/soat",
         rating: 4.7,
         premium: true,
@@ -11,7 +11,7 @@ export const data = [
     {
         id: 2,
         name: "PlayArena",
-        type: "PlayStation xona",
+        type: "ps",
         price: "15 000 so'm/soat",
         rating: 4.3,
         premium: false,
@@ -20,7 +20,7 @@ export const data = [
     {
         id: 3,
         name: "GamePoint",
-        type: "Kompyuter xona",
+        type: "pc",
         price: "8 000 so'm/soat",
         rating: 4.1,
         premium: false,
@@ -29,7 +29,7 @@ export const data = [
     {
         id: 4,
         name: "GamePoint",
-        type: "Kompyuter xona",
+        type: "pc",
         price: "12 000 so'm/soat",
         rating: 5.0,
         premium: true,
@@ -38,7 +38,7 @@ export const data = [
     {
         id: 5,
         name: "PlayArena",
-        type: "PlayStation xona",
+        type: "ps",
         price: "15 000 so'm/soat",
         rating: 4.3,
         premium: true,
@@ -47,7 +47,7 @@ export const data = [
     {
         id: 6,
         name: "PlayArena",
-        type: "PlayStation xona",
+        type: "ps",
         price: "15 000 so'm/soat",
         rating: 4.3,
         premium: true,
