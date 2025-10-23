@@ -1,11 +1,8 @@
 'use client';
 import React, { useState } from 'react';
-import { account } from '../../appwrite/appwriteConfig';
-import { useAuth } from '../../context/AuthContext';
 import {
   Box,
   Button,
-  Grid,
   TextField,
   Typography,
   Card,
@@ -14,30 +11,42 @@ import {
   Fade,
 } from '@mui/material';
 import { motion } from 'framer-motion';
+import { auth } from '@/firebase/firebaseConfig';
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
-  const { setUser } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [isSignup, setIsSignup] = useState(false);
   const [loading, setLoading] = useState(false);
-  console.log(account);
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
 
-  const handleAuth = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       if (isSignup) {
-        await account.create(ID.unique(), email, password, name);
-        await account.createEmailSession(email, password);
-      } else {
-        await account.createEmailSession(email, password);
-      }
+        // Yangi user yaratish
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-      const userData = await account.get();
-      setUser(userData);
-      alert(isSignup ? 'Sign up successful!' : 'Login successful!');
+        // Full name ni profilda saqlash
+        await updateProfile(userCredential.user, {
+          displayName: fullName,
+        });
+
+        alert('Account created successfully!');
+        router.push('/');
+      } else {
+        await signInWithEmailAndPassword(auth, email, password);
+        router.push('/');
+      }
     } catch (err) {
       alert(err.message);
     } finally {
@@ -55,6 +64,7 @@ const LoginPage = () => {
         justifyContent: 'space-between',
       }}
     >
+      {/* Left image */}
       <Box
         sx={{
           width: '70%',
@@ -64,14 +74,13 @@ const LoginPage = () => {
           backgroundSize: 'cover',
           clipPath: 'polygon(0 0, 100% 0%, 50% 100%, 0% 100%)',
         }}
-      >
-        .
-      </Box>
+      ></Box>
+
+      {/* Right login/signup card */}
       <Box
         sx={{
           width: '50%',
           height: '100vh',
-
           display: 'flex',
           justifyContent: 'left',
           alignItems: 'center',
@@ -98,19 +107,20 @@ const LoginPage = () => {
 
                 <Box
                   component="form"
-                  onSubmit={handleAuth}
+                  onSubmit={handleSubmit}
                   display="flex"
                   flexDirection="column"
                   gap={2}
                 >
+                  {/* Faqat signup paytida chiqadi */}
                   {isSignup && (
                     <TextField
                       label="Full Name"
                       variant="outlined"
                       fullWidth
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
                       required
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
                     />
                   )}
 
@@ -119,9 +129,9 @@ const LoginPage = () => {
                     type="email"
                     variant="outlined"
                     fullWidth
+                    required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    required
                   />
 
                   <TextField
@@ -129,22 +139,22 @@ const LoginPage = () => {
                     type="password"
                     variant="outlined"
                     fullWidth
+                    required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    required
                   />
 
                   <Button
                     type="submit"
                     fullWidth
                     variant="contained"
+                    disabled={loading}
                     sx={{
                       mt: 1,
                       backgroundColor: '#3B0270',
                       '&:hover': { backgroundColor: '#28004f' },
                       py: 1.3,
                     }}
-                    disabled={loading}
                   >
                     {loading ? (
                       <CircularProgress size={24} sx={{ color: 'white' }} />

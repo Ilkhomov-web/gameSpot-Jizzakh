@@ -1,15 +1,16 @@
 "use client";
-import Navbar from "@/components/Navbar";
+
 import { ThemeProvider, useThemeContext } from "@/context/ThemeContext";
 import { AuthProvider } from "@/context/AuthContext";
 import { MapOrListProvider } from "@/context/MapOrListContext";
-import { usePathname } from "next/navigation";
+
 
 export default function RootLayout({ children }) {
-  const pathname = usePathname();
 
-  const hideNavbar =
-    pathname === "/login" || pathname === "/signup"; // login yoki signupda yashiramiz
+
+  
+
+
 
   return (
     <html lang="en">
@@ -18,7 +19,6 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <ThemedBackground>
               <MapOrListProvider>
-                {!hideNavbar && <Navbar />}
                 {children}
               </MapOrListProvider>
             </ThemedBackground>
