@@ -11,6 +11,8 @@ import { useMapOrList } from '@/context/MapOrListContext';
 import Navbar from '@/components/Navbar';
 import { useAuth } from '@/context/AuthContext';
 import Loading from '@/components/Loading';
+import MarqueeComponents from '@/components/MarqueeComponents';
+import Footer from '@/components/Footer';
 
 export default function HomePage() {
   const { mode } = useThemeContext();
@@ -56,21 +58,26 @@ export default function HomePage() {
               width: '6px',
             },
             '&::-webkit-scrollbar-thumb': {
-              backgroundColor: 'rgba(0,0,0,0.2)', // yarim shaffof
+              backgroundColor: 'rgba(0,0,0,0.2)',
               borderRadius: '10px',
             },
             '&::-webkit-scrollbar-thumb:hover': {
-              backgroundColor: 'rgba(0,0,0,0.3)', // hoverda biroz quyuqroq
+              backgroundColor: 'rgba(0,0,0,0.3)',
             },
           }}
         >
           {mapOrList === 'map' ? (
-            <LeafLetMap data={data} /> // ✅ faqat bitta xarita
+            <LeafLetMap data={data} />
           ) : (
             data.map((item) => <ListComponent key={item.id} data={item} />)
           )}
         </Box>
+        <Typography sx={{ fontSize: { xs: '18px', lg: '50px', color: '#3B0270' } }}>
+          Bizning Homiylar
+        </Typography>
+        <MarqueeComponents />
       </Container>
+      <Footer />
     </>
   );
 }

@@ -54,7 +54,6 @@ const Navbar = () => {
             </Typography>
           </Grid>
 
-          {/* O‘ng tomondagi tugmalar */}
           <Grid
             item
             xs={6}
