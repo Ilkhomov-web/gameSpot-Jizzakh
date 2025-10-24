@@ -12,24 +12,22 @@ const ListComponent = (prop) => {
   const { data } = prop;
   const { mode } = useThemeContext();
   return (
-    <Link href={'pc-details'} style={{ textDecoration: 'none', color: 'currentcolor' }}>
+    <Link href={`/pc-details/${data.id}`} style={{ textDecoration: 'none', color: 'currentcolor' }}>
       <Box
         sx={{
           background: '#3B0270',
           display: 'flex',
           justifyContent: 'space-between',
           borderRadius: '12px',
-          padding: '0px 20px',
+          padding: '10px 20px',
           position: 'relative',
           transition: 'all 0.3s ease',
-          // border: '1px solid rgba(74,144,255,0.4)',
           cursor: 'pointer',
           backdropFilter: 'blur(8px)',
           '&:hover': {
             background:
               'linear-gradient(91deg,rgba(99, 34, 161, 1) 0%, rgba(59, 2, 112, 1) 50%, rgba(114, 64, 161, 1) 100%)',
             boxShadow: '0 0 20px rgba(74,144,255,0.2), 0 0 40px rgba(111,66,193,0.2)',
-            //   border: '1px solid rgba(74,144,255,0.4)',
             transform: 'translateY(-4px) scale(1.01)',
             transition: 'all 0.3s ease',
           },
@@ -50,7 +48,7 @@ const ListComponent = (prop) => {
             Premium
           </Typography>
         )}
-        <Box component={'img'} width={'100px'} src={'/logo.png'}></Box>
+        <Box component={'img'} width={'100px'} src={data.imageLogo}></Box>
         <Box
           sx={{
             display: 'flex',

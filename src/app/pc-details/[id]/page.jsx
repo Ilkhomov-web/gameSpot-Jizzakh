@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Container,
@@ -16,12 +16,19 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ChatDrawer from '@/components/ChatDrawer';
 import SelectedMap from '@/components/SelectedMap';
+import { useParams } from 'next/navigation';
+import Loading from '@/components/Loading';
+import { db } from '@/firebase/firebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
 
 const PcDetailsPage = () => {
+  const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
+  const [room, setRoom] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const handleOpen = (img) => {
     setSelectedImg(img);
@@ -33,7 +40,34 @@ const PcDetailsPage = () => {
     setSelectedImg(null);
   };
 
-  const images = ['/logo.png', '/logo.png', '/logo.png', '/logo.png'];
+  useEffect(() => {
+    const fetchRoom = async () => {
+      try {
+        const docRef = doc(db, 'rooms', 'rooms');
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setRoom(docSnap.data());
+        } else {
+          console.error('Room topilmadi');
+          setRoom(null);
+        }
+      } catch (err) {
+        console.error('Xatolik:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRoom();
+  }, [id]);
+
+  if (loading) return <Loading />;
+  if (!room) return <Typography sx={{ textAlign: 'center', mt: 10 }}>Room topilmadi 😕</Typography>;
+
+  const images = room.roomsImage || ['/logo.png', '/logo.png', '/logo.png', '/logo.png'];
+
+  console.log(room);
 
   return (
     <Box>
@@ -76,26 +110,27 @@ const PcDetailsPage = () => {
               ))}
             </Box>
           </Grid>
+
           <Grid item xs={12} md={6}>
             <Stack spacing={2}>
               <Typography variant="h4" fontWeight={600}>
-                CyberX Gaming Zone
+                {room.name}
               </Typography>
 
               <Typography color="text.secondary" variant="body1">
-                📍 Manzil: Jizzax sh., Mustaqillik ko‘chasi 12A
+                📍 Manzil: {room.address}
               </Typography>
 
               <Typography variant="body2" color="text.secondary">
-                ⏰ Ish vaqti: 09:00 — 23:00
+                ⏰ Ish vaqti: {room.workTime}
               </Typography>
 
               <Typography variant="body2" color="text.secondary">
-                💻 Kompyuterlar soni: 25 ta | 🎮 Playstation: 8 ta
+                💻 Kompyuterlar soni: {room.pcsPiece} ta | 🎮 Playstation: {room.pcPiece} ta
               </Typography>
 
               <Typography variant="h6" sx={{ mt: 2 }}>
-                💵 Narx: <strong>10 000 so‘m / soat</strong>
+                💵 Narx: <strong>{room.price} so‘m / soat</strong>
               </Typography>
 
               <Typography variant="body1" sx={{ mt: 2 }}>
@@ -103,9 +138,9 @@ const PcDetailsPage = () => {
               </Typography>
 
               <Stack direction="row" spacing={1} flexWrap="wrap">
-                {['Fast Wi-Fi', 'Snack bar', 'Turnir joyi', 'Konditsioner'].map((item) => (
+                {room.features?.map((item, i) => (
                   <Box
-                    key={item}
+                    key={i}
                     sx={{
                       px: 2,
                       py: 0.5,
@@ -118,6 +153,7 @@ const PcDetailsPage = () => {
                   </Box>
                 ))}
               </Stack>
+
               <Box sx={{ display: 'flex', gap: '20px' }}>
                 <Button
                   variant="contained"
@@ -156,6 +192,7 @@ const PcDetailsPage = () => {
           </Grid>
         </Grid>
       </Container>
+
       <Modal open={open} onClose={handleClose} closeAfterTransition>
         <Fade in={open}>
           <Box
@@ -208,12 +245,17 @@ const PcDetailsPage = () => {
               overflow: 'hidden',
             }}
           >
-            <SelectedMap />
+            <SelectedMap room={room} />
           </Box>
         </Fade>
       </Modal>
 
-      <ChatDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} roomName="CyberX Gaming" />
+      {/* Chat oynasi */}
+      <ChatDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        room={{ id: 'rooms', name: room.name }}
+      />
 
       <Footer />
     </Box>

@@ -33,10 +33,7 @@ const LoginPage = () => {
 
     try {
       if (isSignup) {
-        // Yangi user yaratish
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-        // Full name ni profilda saqlash
         await updateProfile(userCredential.user, {
           displayName: fullName,
         });
@@ -64,7 +61,6 @@ const LoginPage = () => {
         justifyContent: 'space-between',
       }}
     >
-      {/* Left image */}
       <Box
         sx={{
           width: '70%',
@@ -76,7 +72,6 @@ const LoginPage = () => {
         }}
       ></Box>
 
-      {/* Right login/signup card */}
       <Box
         sx={{
           width: '50%',
@@ -112,7 +107,6 @@ const LoginPage = () => {
                   flexDirection="column"
                   gap={2}
                 >
-                  {/* Faqat signup paytida chiqadi */}
                   {isSignup && (
                     <TextField
                       label="Full Name"

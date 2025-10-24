@@ -12,20 +12,23 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
+import { sendMessageToRoom } from '../services/firestore/chatService';
 
-const ChatDrawer = ({ open, onClose, roomName }) => {
+const ChatDrawer = ({ open, onClose, room }) => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!inputValue.trim()) return;
+    if (!room?.id) {
+      console.error('❌ room.id topilmadi');
+      return;
+    }
+
+    await sendMessageToRoom(room.id, inputValue);
 
     setMessages((prev) => [...prev, { from: 'user', text: inputValue }]);
     setInputValue('');
-
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { from: 'admin', text: 'Rahmat! Tez orada bog‘lanamiz 😊' }]);
-    }, 1000);
   };
 
   return (
@@ -38,7 +41,6 @@ const ChatDrawer = ({ open, onClose, roomName }) => {
           flexDirection: 'column',
         }}
       >
-        {/* Header */}
         <Box
           sx={{
             display: 'flex',
@@ -50,7 +52,7 @@ const ChatDrawer = ({ open, onClose, roomName }) => {
           }}
         >
           <Typography variant="h6" fontWeight={600}>
-            Chat — {roomName || 'Club'}
+            Chat — {room?.name || 'Club'}
           </Typography>
           <IconButton onClick={onClose} sx={{ color: 'white' }}>
             <CloseIcon />
@@ -59,7 +61,6 @@ const ChatDrawer = ({ open, onClose, roomName }) => {
 
         <Divider />
 
-        {/* Chat messages */}
         <Box
           sx={{
             flex: 1,
@@ -93,11 +94,7 @@ const ChatDrawer = ({ open, onClose, roomName }) => {
         <Stack
           direction="row"
           spacing={1}
-          sx={{
-            p: 1.5,
-            bgcolor: 'white',
-            borderTop: '1px solid #eee',
-          }}
+          sx={{ p: 1.5, bgcolor: 'white', borderTop: '1px solid #eee' }}
         >
           <TextField
             fullWidth

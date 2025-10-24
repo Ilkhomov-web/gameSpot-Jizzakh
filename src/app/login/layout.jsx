@@ -1,4 +1,3 @@
-// app/login/layout.jsx
 'use client';
 import { ThemeProvider } from '@/context/ThemeContext';
 import { AuthProvider } from '@/context/AuthContext';

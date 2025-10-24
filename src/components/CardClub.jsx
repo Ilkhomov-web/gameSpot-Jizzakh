@@ -12,7 +12,7 @@ const CardClub = (prop) => {
   const { mode } = useThemeContext();
   const { club } = prop;
   return (
-    <Link href={'pc-details'} style={{ textDecoration: 'none', color: 'currentcolor' }}>
+    <Link href={`/pc-details/${club.id}`} style={{ textDecoration: 'none', color: 'currentcolor' }}>
       <Box
         sx={{
           width: '270px',
@@ -21,14 +21,12 @@ const CardClub = (prop) => {
           borderRadius: '12px',
           position: 'relative',
           transition: 'all 0.5s ease',
-          // border: '1px solid rgba(74,144,255,0.4)',/
           cursor: 'pointer',
           backdropFilter: 'blur(8px)',
           '&:hover': {
             background:
               'linear-gradient(91deg,rgba(99, 34, 161, 1) 0%, rgba(59, 2, 112, 1) 50%, rgba(114, 64, 161, 1) 100%)',
             boxShadow: '0 0 20px rgba(74,144,255,0.2), 0 0 40px rgba(111,66,193,0.2)',
-            // border: '1px solid rgba(74,144,255,0.4)',/
             transform: 'translateY(-10px) scale(1.01)',
             transition: 'all 0.5s ease',
           },

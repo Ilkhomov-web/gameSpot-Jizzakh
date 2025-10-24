@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Box, Modal, Fade, Typography, Button } from '@mui/material';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import 'leaflet-routing-machine';
@@ -12,36 +12,9 @@ const Routing = ({ userLocation, destination }) => {
   return null;
 };
 
-const pcIcon = new L.Icon({
-  iconUrl: '/logo.png',
-  iconSize: [50, 50],
-  iconAnchor: [25, 50],
-  popupAnchor: [0, -45],
-});
-
-const userIcon = new L.Icon({
-  iconUrl: '/userLocationIcon.png',
-  iconSize: [50, 50],
-  iconAnchor: [25, 50],
-  popupAnchor: [0, -45],
-});
-
-const SelectedMap = () => {
+const SelectedMap = ({ room }) => {
   const [userLocation, setUserLocation] = useState(null);
-  const [selected, setSelected] = useState(null);
   const [open, setOpen] = useState(false);
-
-  const data = {
-    id: 1,
-    name: 'CyberZone',
-    type: 'pc',
-    price: "10 000 so'm/soat",
-    rating: 4.7,
-    premium: true,
-    image: '/logo.png',
-    location: { lat: 40.1162, lng: 67.8425 },
-    address: "Jizzax markazi, Mustaqillik ko'chasi",
-  };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -58,7 +31,27 @@ const SelectedMap = () => {
     );
   }, []);
 
+  if (!room) {
+    return (
+      <Typography align="center" sx={{ mt: 5 }}>
+        ⚠️ Ma’lumot topilmadi
+      </Typography>
+    );
+  }
+
   if (!userLocation) return <Typography align="center">📍 Joylashuv aniqlanmoqda...</Typography>;
+
+  const userIcon = new L.Icon({
+    iconUrl: '/userLocationIcon.png',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+
+  const pcIcon = new L.Icon({
+    iconUrl: room.imageLogo || '/logo.png',
+    iconSize: [45, 45],
+    iconAnchor: [22, 45],
+  });
 
   return (
     <Box
@@ -74,27 +67,23 @@ const SelectedMap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="© OpenStreetMap contributors"
         />
-
         <Marker icon={userIcon} position={[userLocation.lat, userLocation.lng]}>
           <Popup>Sizning joylashuvingiz</Popup>
         </Marker>
 
-        <Marker
-          icon={pcIcon}
-          position={[data.location.lat, data.location.lng]}
-          eventHandlers={{
-            click: () => {
-              setSelected(data);
-              setOpen(true);
-            },
-          }}
-        >
-          <Popup>{data.name}</Popup>
-        </Marker>
-
-        {selected && <Routing userLocation={userLocation} destination={data.location} />}
+        {room && (
+          <Marker
+            icon={pcIcon}
+            position={[room.lat, room.lng]}
+            eventHandlers={{
+              click: () => setOpen(true),
+            }}
+          >
+            <Popup>{room.name}</Popup>
+          </Marker>
+        )}
+        {room && <Routing userLocation={userLocation} destination={room} />}
       </MapContainer>
-
       <Modal open={open} onClose={() => setOpen(false)} closeAfterTransition>
         <Fade in={open}>
           <Box
@@ -112,18 +101,17 @@ const SelectedMap = () => {
             }}
           >
             <img
-              src={selected?.image}
-              alt={selected?.name}
+              src={room.imageLogo || '/logo.png'}
+              alt={room.name}
               style={{ width: '100%', borderRadius: '12px', marginBottom: '16px' }}
             />
             <Typography variant="h6" fontWeight={600}>
-              {selected?.name}
+              {room.name}
             </Typography>
             <Typography color="text.secondary" sx={{ mt: 1 }}>
-              {selected?.address}
+              {room.address}
             </Typography>
-            <Typography sx={{ mt: 1 }}>💵 {selected?.price}</Typography>
-            <Typography sx={{ mt: 1 }}>⭐ {selected?.rating} / 5.0</Typography>
+            <Typography sx={{ mt: 1 }}>💵 {room.price} so‘m/soat</Typography>
             <Button
               variant="contained"
               sx={{
