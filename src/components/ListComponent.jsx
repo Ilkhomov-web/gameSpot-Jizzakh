@@ -11,25 +11,29 @@ import Link from 'next/link';
 const ListComponent = (prop) => {
   const { data } = prop;
   const { mode } = useThemeContext();
+
   return (
-    <Link href={`/pc-details/${data.id}`} style={{ textDecoration: 'none', color: 'currentcolor' }}>
+    <Link href={`/pc-details/${data.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
       <Box
         sx={{
-          background: '#3B0270',
           display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          alignItems: { xs: 'flex-start', sm: 'center' },
           justifyContent: 'space-between',
+          gap: { xs: '10px', md: '20px' },
+          background: '#3B0270',
           borderRadius: '12px',
-          padding: '10px 20px',
+          p: { xs: '10px', md: '15px' },
           position: 'relative',
-          transition: 'all 0.3s ease',
           cursor: 'pointer',
+          transition: 'all .3s ease',
           backdropFilter: 'blur(8px)',
+          width: '100%',
           '&:hover': {
             background:
               'linear-gradient(91deg,rgba(99, 34, 161, 1) 0%, rgba(59, 2, 112, 1) 50%, rgba(114, 64, 161, 1) 100%)',
             boxShadow: '0 0 20px rgba(74,144,255,0.2), 0 0 40px rgba(111,66,193,0.2)',
-            transform: 'translateY(-4px) scale(1.01)',
-            transition: 'all 0.3s ease',
+            transform: { sm: 'translateY(-4px) scale(1.01)' },
           },
         }}
       >
@@ -37,85 +41,74 @@ const ListComponent = (prop) => {
           <Typography
             sx={{
               position: 'absolute',
-              top: '0px',
-              right: '0px',
+              top: 0,
+              right: 0,
               background: 'red',
               borderTopRightRadius: '10px',
-              padding: '5px 20px',
+              p: '5px 15px',
               color: 'white',
+              fontSize: { xs: '10px', md: '14px' },
             }}
           >
             Premium
           </Typography>
         )}
-        <Box component={'img'} width={'100px'} src={data.imageLogo}></Box>
+
+        <Box
+          component="img"
+          src={'/logo.png'}
+          sx={{
+            width: { xs: '100%', sm: '90px' },
+            height: { xs: '120px', sm: '90px' },
+            borderRadius: '8px',
+            objectFit: 'cover',
+          }}
+        />
+
         <Box
           sx={{
             display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: '10px',
+            flexWrap: 'wrap',
+            justifyContent: { xs: 'flex-start', sm: 'space-between' },
+            width: '100%',
+            gap: '8px',
           }}
         >
-          <BadgeIcon sx={{ color: 'white' }} />
-          <Typography sx={{ color: mode === 'dark' ? 'white' : 'white' }}>{data.name}</Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '10px',
-          }}
-        >
-          {data.type === 'pc' ? (
-            <ComputerIcon sx={{ color: 'white' }} />
-          ) : (
-            <SportsEsportsIcon sx={{ color: 'white' }} />
-          )}
-          <Typography sx={{ color: mode === 'dark' ? 'white' : 'white' }}>
-            {data.type === 'pc' ? 'Kompyuter' : 'PlayStation'}
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: '10px',
-          }}
-        >
-          <AccessAlarmIcon sx={{ color: 'white' }} />
-          <Typography sx={{ color: mode === 'dark' ? 'white' : 'white' }}>{data.price}</Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '10px',
-          }}
-        >
-          <Typography
-            sx={{
-              color: mode === 'dark' ? 'white' : 'white',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '5px',
-            }}
-          >
-            {data.rating}{' '}
-          </Typography>
-          <Typography>
-            {Array.from({ length: data.rating }).map((_, index) => {
-              return (
-                <StarIcon
-                  key={index}
-                  sx={{ color: 'gold', fontSize: { xs: '10px', lg: '20px' } }}
-                />
-              );
-            })}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <BadgeIcon sx={{ color: 'white', fontSize: { xs: 14, md: 18 } }} />
+            <Typography sx={{ color: 'white', fontSize: { xs: 12, md: 16 } }}>
+              {data.name}
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            {data.type === 'pc' ? (
+              <ComputerIcon sx={{ color: 'white', fontSize: { xs: 14, md: 18 } }} />
+            ) : (
+              <SportsEsportsIcon sx={{ color: 'white', fontSize: { xs: 14, md: 18 } }} />
+            )}
+            <Typography sx={{ color: 'white', fontSize: { xs: 12, md: 16 } }}>
+              {data.type === 'pc' ? 'Kompyuter' : 'PlayStation'}
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <AccessAlarmIcon sx={{ color: 'white', fontSize: { xs: 14, md: 18 } }} />
+            <Typography sx={{ color: 'white', fontSize: { xs: 12, md: 16 } }}>
+              {data.price}
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Typography sx={{ color: 'white', fontSize: { xs: 12, md: 16 } }}>
+              {data.rating}
+            </Typography>
+            <Box>
+              {Array.from({ length: data.rating }).map((_, index) => (
+                <StarIcon key={index} sx={{ color: 'gold', fontSize: { xs: 12, md: 18 } }} />
+              ))}
+            </Box>
+          </Box>
         </Box>
       </Box>
     </Link>

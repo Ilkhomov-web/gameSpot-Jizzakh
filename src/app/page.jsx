@@ -102,7 +102,7 @@ export default function HomePage() {
         <Typography
           sx={{
             fontSize: { xs: '22px', md: '32px', lg: '45px' },
-            color: '#3B0270',
+            color: mode === 'dark' ? 'white' : '#3B0270',
             fontWeight: 600,
             mt: 5,
             mb: 2,
