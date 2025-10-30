@@ -62,7 +62,7 @@ const Footer = () => {
               <Instagram />
             </IconButton>
             <IconButton
-              href="https://github.com/yourrepo"
+              href="https://github.com/ilkhomov-web"
               target="_blank"
               sx={{ color: '#ccc', '&:hover': { color: '#9e9e9e' } }}
             >
