@@ -48,7 +48,7 @@ const SelectedMap = ({ room }) => {
   });
 
   const pcIcon = new L.Icon({
-    iconUrl: room.imageLogo || '/logo.png',
+    iconUrl: '/logo.png',
     iconSize: [45, 45],
     iconAnchor: [22, 45],
   });
