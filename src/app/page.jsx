@@ -21,6 +21,12 @@ export default function HomePage() {
   const { loading } = useAuth();
   const [rooms, setRooms] = useState([]);
   const [fetching, setFetching] = useState(true);
+  const [filterType, setFilterType] = useState('all');
+
+  const filteredRooms = rooms.filter((item) => {
+    if (filterType === 'all') return true;
+    return item.type === filterType;
+  });
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -75,7 +81,7 @@ export default function HomePage() {
             ))}
         </Box>
 
-        <MapSettingBar />
+        <MapSettingBar setFilterType={setFilterType} />
         <Box
           sx={{
             display: 'flex',
