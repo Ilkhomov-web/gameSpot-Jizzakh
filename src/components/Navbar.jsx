@@ -42,7 +42,10 @@ const Navbar = () => {
   const menuLinks = (
     <List>
       <ListItem sx={{ color: mode === 'dark' ? 'white' : '#3B0270', fontSize: 16 }}>
-        <Link href={'#'} style={{ textDecoration: 'none', color: 'currentcolor' }}>
+        <Link
+          href={'https://t.me/Elka_0624'}
+          style={{ textDecoration: 'none', color: 'currentcolor' }}
+        >
           {' '}
           Kompyuter club qo'shish
         </Link>
