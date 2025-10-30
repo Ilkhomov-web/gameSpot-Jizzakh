@@ -11,11 +11,12 @@ import Link from 'next/link';
 const CardClub = (prop) => {
   const { mode } = useThemeContext();
   const { club } = prop;
+
   return (
     <Link href={`/pc-details/${club.id}`} style={{ textDecoration: 'none', color: 'currentcolor' }}>
       <Box
         sx={{
-          width: '270px',
+          width: { xs: '100%', sm: '48%', md: '270px' },
           background: '#3B0270',
           justifyContent: 'space-between',
           borderRadius: '12px',
@@ -32,63 +33,75 @@ const CardClub = (prop) => {
           },
         }}
       >
-        <Box component={'img'} width={'100%'} height={'250px'} src={'/logo.png'}></Box>
+        <Box
+          component="img"
+          width="100%"
+          height={{ xs: '180px', md: '250px' }}
+          src={club.image || '/logo.png'}
+        />
+
         {club.premium && (
           <Typography
             sx={{
               position: 'absolute',
-              top: '0px',
-              right: '0px',
+              top: 0,
+              right: 0,
               background: 'red',
               borderTopRightRadius: '10px',
               padding: '5px 20px',
+              fontSize: { xs: '10px', sm: '12px' },
               color: 'white',
             }}
           >
             Premium
           </Typography>
         )}
+
         <Box sx={{ padding: '10px 20px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <BadgeIcon sx={{ color: 'white' }} />
-            <Typography sx={{ color: mode === 'dark' ? 'white' : 'white' }}>{club.name}</Typography>
+            <BadgeIcon sx={{ color: 'white', fontSize: { xs: '16px', md: '22px' } }} />
+            <Typography sx={{ color: 'white', fontSize: { xs: '12px', md: '16px' } }}>
+              {club.name}
+            </Typography>
           </Box>
+
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             {club.type === 'pc' ? (
-              <ComputerIcon sx={{ color: 'white' }} />
+              <ComputerIcon sx={{ color: 'white', fontSize: { xs: '16px', md: '22px' } }} />
             ) : (
-              <SportsEsportsIcon sx={{ color: 'white' }} />
+              <SportsEsportsIcon sx={{ color: 'white', fontSize: { xs: '16px', md: '22px' } }} />
             )}
-            <Typography sx={{ color: mode === 'dark' ? 'white' : 'white' }}>
+            <Typography sx={{ color: 'white', fontSize: { xs: '12px', md: '14px' } }}>
               {club.type === 'pc' ? 'Kompyuter' : 'PlayStation'}
             </Typography>
           </Box>
+
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <AccessAlarmIcon sx={{ color: 'white' }} />
-            <Typography sx={{ color: mode === 'dark' ? 'white' : 'white' }}>
+            <AccessAlarmIcon sx={{ color: 'white', fontSize: { xs: '16px', md: '22px' } }} />
+            <Typography sx={{ color: 'white', fontSize: { xs: '12px', md: '14px' } }}>
               {club.price}
             </Typography>
           </Box>
+
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Typography
               sx={{
-                color: mode === 'dark' ? 'white' : 'white',
+                color: 'white',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '5px',
+                fontSize: { xs: '12px', md: '14px' },
               }}
             >
-              {club.rating}{' '}
+              {club.rating}
             </Typography>
             <Typography>
-              {Array.from({ length: club.rating }).map((_, index) => {
-                return (
-                  <StarIcon
-                    key={index}
-                    sx={{ color: 'gold', fontSize: { xs: '10px', lg: '20px' } }}
-                  />
-                );
-              })}
+              {Array.from({ length: club.rating }).map((_, index) => (
+                <StarIcon
+                  key={index}
+                  sx={{ color: 'gold', fontSize: { xs: '12px', md: '20px' } }}
+                />
+              ))}
             </Typography>
           </Box>
         </Box>

@@ -41,36 +41,50 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-      <Container>
+      <Container maxWidth="lg" sx={{ px: { xs: 2, md: 0 } }}>
         <Typography
           sx={{
             color: mode === 'dark' ? 'white' : '#3B0270',
-            fontSize: { xs: '12px', lg: '30px' },
+            fontSize: { xs: '18px', md: '28px', lg: '35px' },
+            fontWeight: 600,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            mt: 2,
           }}
         >
           Premium Clublar
-          <WorkspacePremiumIcon sx={{ fontSize: '30px' }} />
+          <WorkspacePremiumIcon sx={{ fontSize: { xs: 20, md: 30 } }} />
         </Typography>
-
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '20px', padding: '20px 0px' }}>
+        <Box
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: '1fr',
+              sm: '1fr 1fr',
+              md: '1fr 1fr 1fr',
+            },
+            gap: 2,
+            py: 3,
+          }}
+        >
           {rooms
             .filter((club) => club.premium)
             .map((club) => (
               <CardClub key={club.id} club={club} />
-            ))}{' '}
+            ))}
         </Box>
 
         <MapSettingBar />
-
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px',
-            margin: '30px 0px',
-            height: mapOrList === 'list' ? '650px' : 'auto',
-            overflowY: 'auto',
-            padding: '10px 20px',
+            gap: 2,
+            mt: 3,
+            height: mapOrList === 'list' ? { xs: '500px', md: '650px' } : 'auto',
+            overflowY: mapOrList === 'list' ? 'auto' : 'visible',
+            px: { xs: 1, md: 2 },
             '&::-webkit-scrollbar': { width: '6px' },
             '&::-webkit-scrollbar-thumb': {
               backgroundColor: 'rgba(0,0,0,0.2)',
@@ -85,7 +99,16 @@ export default function HomePage() {
           )}
         </Box>
 
-        <Typography sx={{ fontSize: { xs: '18px', lg: '50px', color: '#3B0270' } }}>
+        <Typography
+          sx={{
+            fontSize: { xs: '22px', md: '32px', lg: '45px' },
+            color: '#3B0270',
+            fontWeight: 600,
+            mt: 5,
+            mb: 2,
+            textAlign: { xs: 'center', md: 'left' },
+          }}
+        >
           Bizning Homiylar
         </Typography>
         <MarqueeComponents />

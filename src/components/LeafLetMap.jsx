@@ -62,8 +62,10 @@ const LeafLetMap = ({ data }) => {
         />
 
         {data.map((item) => {
+          const iconUrl = item.imageLogo?.trim() || '/logo.png';
+
           const icon = new L.Icon({
-            iconUrl: item.imageLogo || '/logo.png',
+            iconUrl: '/logo.png',
             iconSize: [45, 45],
             iconAnchor: [22, 45],
             popupAnchor: [0, -45],
